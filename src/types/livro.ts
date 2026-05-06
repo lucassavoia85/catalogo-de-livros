@@ -2,7 +2,7 @@ export interface Livro {
   _id?: string;
   titulo: string;
   autor: string;
-  anoPublicacao: number;
+  anoPublicacao?: string | number;
   genero: string;
   resumo: string;
   status: 'Lido' | 'Não Lido';

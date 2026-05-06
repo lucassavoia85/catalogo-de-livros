@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getLivro, deleteLivro } from './services/api';
+import { getLivro, deleteLivro, postLivro } from './services/api'; 
 import  { type Livro } from './types/livro';
 import BookList from './components/BookList';
 import BookForm from './components/BookForm';
@@ -18,7 +18,12 @@ function App() {
   };
 
   const adicionarLivro = async (novo: Livro) => {
-    setMeuLivro([...meuLivro, novo]);
+    try {
+      await postLivro(novo);
+      await carregarLivro(); 
+    } catch (error) {
+      alert("Erro de rede: Verifique se o ID do CrudCrud ainda é válido.");
+    }
   };
 
 
@@ -28,12 +33,15 @@ function App() {
 
   return (
     <>
-      <h1>Catálogo de Livros</h1>
+    <div className="min-h-screen bg-gray-100 p-4">
+      <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+      <h1 className="bg-gray-100 text-4xl font-bold text-center mb-4">Catálogo de Livros</h1>
 
-<BookForm onAdd={adicionarLivro} />
+      <BookForm onAdd={adicionarLivro} />
 
       <BookList livros={meuLivro} onDelete={handleDelete} />
-      <button onClick={carregarLivro}>Recarregar</button>
+      </div>
+      </div>
     </>
   );
 }
