@@ -8,7 +8,7 @@ interface BookListProps {
 
 const BookList = ({ livros, onDelete }: BookListProps) => {
   return (
-    <ul>
+    <ul className="list-none space y-4 p-4">
       {livros.map((item) => (
         <BookItem key={item._id}
           livro={item}

@@ -1,15 +1,26 @@
 import axios from "axios";
-import { Livro } from "../types/livro.ts";
+import type { Livro } from "../types/livro";
 
 const api = axios.create({
-  // Deixamos a baseURL no ponto comum
-  baseURL: "https://crudcrud.com/api/c4c8fac22d9846db92c21f6f3037108d",
+
+  baseURL: "https://crudcrud.com/api/47eaffcf2d1e44eba61fd47700d34ffc ",
 });
+
+// Função para POST
+export const postLivro = async (livro: Omit<Livro, '_id'>) => {
+  try {
+    const response = await api.post('/livro', livro);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao adicionar livro:", error);
+    throw error; // Re-lançar o erro para que o componente possa tratá-lo
+  }
+};
 
 // Função para DELETE
 export const deleteLivro = async (id: string) => {
   try {
-  await api.delete(`/livro/${id}`);
+    await api.delete(`/livro/${id}`);
   } catch (error) {
     console.error("Erro ao deletar", error);
   }
