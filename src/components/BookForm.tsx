@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import type { Livro } from '../types/livro';
+import { postLivro } from '../services/api'; // Importa a função postLivro do seu serviço de API
 
-
-interface BookFormProps {
-  onAdd: (novo: Livro) => Promise<void>;
-}
-
-const BookForm = ({ onAdd }: BookFormProps) => {
+const BookForm = () => {
   const [novoLivro, setNovoLivro] = useState<Livro>({
     titulo: '',
     autor: '',
-    anoPublicacao: 0,
+    anoPublicacao: '',
     genero: '',
     resumo: '',
     status: 'Não Lido',
@@ -18,17 +14,22 @@ const BookForm = ({ onAdd }: BookFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    await onAdd(novoLivro);
+    postLivro(novoLivro)
+      .then((response: { data: any; }) => {
+        console.log('Livro adicionado com sucesso:', response.data);
 
-    setNovoLivro({
-      titulo: '',
-      autor: '',
-      anoPublicacao: 0,
-      genero: '',
-      resumo: '',
-      status: 'Não Lido',
-    });
+        setNovoLivro({
+          titulo: '',
+          autor: '',
+          anoPublicacao: '',
+          genero: '',
+          resumo: '',
+          status: 'Não Lido',
+        });
+      })
+      .catch((error: any) => {
+        console.error('Erro ao adicionar livro:', error);
+      });
   };
 
   return (
