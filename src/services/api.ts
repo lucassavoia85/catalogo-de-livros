@@ -25,3 +25,12 @@ export const getLivro = async (): Promise<Livro[]> => {
     return [];
   }
 };
+
+// Função para POST
+export const postLivro = async (livro: Livro) => {
+  try {    const response = await api.post('/livro', livro);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao adicionar livro", error);
+  }
+}; 
