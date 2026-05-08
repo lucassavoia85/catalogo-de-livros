@@ -10,7 +10,7 @@ const BookList = ({ livros, onDelete }: BookListProps) => {
   return (
     <ul className="list-none space y-4 p-4">
       {livros.map((item) => (
-        <BookItem key={item._id}
+        <BookItem key={item.id}
           livro={item}
           onDelete={onDelete}/>
       ))}

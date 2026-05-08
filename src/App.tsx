@@ -21,8 +21,21 @@ function App() {
     try {
       await postLivro(novo);
       await carregarLivro(); 
-    } catch (error) {
-      alert("Erro de rede: Verifique se o ID do CrudCrud ainda é válido.");
+    } catch (error: any) {
+      console.error("Erro completo da API:", error.response?.data);
+      let msg = "Erro desconhecido ao adicionar livro.";
+      if (error.response) {
+        if (error.response.status === 400) {
+          msg = `Erro de validação (400): ${JSON.stringify(error.response.data)}`;
+        } else if (error.response.status === 404) {
+          msg = "Endpoint não encontrado (404). Verifique o nome do recurso no MockAPI.";
+        }
+      } else if (error.request) {
+        msg = "Erro de rede: Não foi possível conectar ao servidor.";
+      } else {
+        msg = `Erro: ${error.message}`;
+      }
+      alert(msg);
     }
   };
 

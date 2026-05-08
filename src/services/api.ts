@@ -2,35 +2,22 @@ import axios from "axios";
 import type { Livro } from "../types/livro";
 
 const api = axios.create({
-  // Deixamos a baseURL no ponto comum
-  baseURL: "https://crudcrud.com/api/c4c8fac22d9846db92c21f6f3037108d",
+  baseURL: "https://69fe05f08c70b15fa3ca1a25.mockapi.io/livros",
 });
 
 // Função para DELETE
 export const deleteLivro = async (id: string) => {
-  try {
-    await api.delete(`/livro/${id}`);
-  } catch (error) {
-    console.error("Erro ao deletar", error);
-  }
+  await api.delete(`/livros/${id}`);
 };
 
 // Função para GET
 export const getLivro = async (): Promise<Livro[]> => {
-  try {
-    const response = await api.get('/livro');
-    return response.data;
-  } catch (error) {
-    console.error("Erro ao buscar livros", error);
-    return [];
-  }
+  const response = await api.get('/livros');
+  return response.data;
 };
 
 // Função para POST
 export const postLivro = async (livro: Livro) => {
-  try {    const response = await api.post('/livro', livro);
-    return response.data;
-  } catch (error) {
-    console.error("Erro ao adicionar livro", error);
-  }
+  const response = await api.post('/livros', livro);
+  return response.data;
 }; 

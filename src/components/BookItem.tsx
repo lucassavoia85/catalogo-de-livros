@@ -10,9 +10,9 @@ const BookItem = ({livro, onDelete}: BookItemProps) => {
 
     const handleDelete = () => {
         if (window.confirm(`Deseja realmente excluir o livro "${livro.titulo}"?`)) {
-            deleteLivro(livro._id!) 
+            deleteLivro(livro.id!)
                 .then(() => {
-                    onDelete(livro._id!);
+                    onDelete(livro.id!);
                 })
                 .catch(error => console.error("Erro ao excluir:", error));
         }
